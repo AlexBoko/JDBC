@@ -1,7 +1,10 @@
 import model.City;
 import model.Employee;
 import service.EmployeeDAOImpl;
+package hibernate;
 
+import hibernate.model.Employee;
+import hibernate.service.EmployeeDAOImpl;
 import java.sql.*;
 
 public class Application {
@@ -41,6 +44,17 @@ public class Application {
         employeeDAO.getAllEmployees();
         System.out.println("=========+++++++++=========");
         employeeDAO.getEmployeeById(4);
+        employeeDAO = new EmployeeDAOImpl();
+        employeeDAO.createEmployee(new Employee(1, "Александр", "Петров", "м", 35, 1));
+        employeeDAO.updateEmployee(new Employee(4, "Сергей", "Смирнов", "м", 23, 1), 4);
+        employeeDAO.deleteEmployee(new Employee(16, "Александр", "Петров", "м", 35, 2));
+        employeeDAO.getAllEmployees().forEach(System.out::println);
+        System.out.println("=========+++++++++=========");
+        employeeDAO.getEmployeeById(4);
+
+
+    }
+}
 
     }
 }
