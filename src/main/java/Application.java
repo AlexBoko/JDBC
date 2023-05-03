@@ -1,11 +1,15 @@
-import model.City;
-import model.Employee;
-import service.EmployeeDAOImpl;
 package hibernate;
 
+import hibernate.model.City;
 import hibernate.model.Employee;
+import hibernate.service.CityDaoImpl;
+import hibernate.service.CityDao;
 import hibernate.service.EmployeeDAOImpl;
+import hibernate.service.EmployeeDAO;
+import javax.transaction.Transactional;
 import java.sql.*;
+import java.util.List;
+@Transactional
 
 public class Application {
     public static void main(String[] args) throws SQLException {
@@ -49,12 +53,26 @@ public class Application {
         employeeDAO.updateEmployee(new Employee(4, "Сергей", "Смирнов", "м", 23, 1), 4);
         employeeDAO.deleteEmployee(new Employee(16, "Александр", "Петров", "м", 35, 2));
         employeeDAO.getAllEmployees().forEach(System.out::println);
+        CityDao cityDao = new CityDaoImpl();
+        EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+//        employeeDAO.createEmployee(new Employee(1, "Александр", "Петров", "м", 35, City.builder().city_name("Харьков").employees(List.of()).build()));
+//        employeeDAO.updateEmployee(new Employee(4, "Сергей", "Смирнов", "м", 23, new City(1, "Самара", List.of()) ), 4);
+//        employeeDAO.deleteEmployee(new Employee(18, "Александр", "Петров", "м", 35, new City(1, "Самара", List.of())));
+//        employeeDAO.getAllEmployees();
         System.out.println("=========+++++++++=========");
-        employeeDAO.getEmployeeById(4);
+        //       employeeDAO.getEmployeeById(4);
+        City city = new City(6, "Самара", List.of());
+        cityDao.create(city);
+        Employee employee1 = Employee.builder().first_name("Стив").last_name("Смит").gender("м").city(city).age(38).build();
+        Employee employee2 = Employee.builder().first_name("Дональд").last_name("Парк").gender("м").city(city).age(46).build();
+        city.setEmployees(List.of(employee1, employee2));
+        cityDao.updateCity(new City(12, "Канада", List.of()));
+        cityDao.deletedCity(new City(13, "Канада", List.of()));
+        cityDao.getAllCities();
+        System.out.println("=========+++++++++=========");
+        cityDao.getCityById(5);
+        System.out.println(cityDao.getAllCities());
 
-
-    }
-}
 
     }
 }

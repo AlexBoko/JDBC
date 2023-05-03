@@ -1,8 +1,10 @@
-package model;
 package hibernate.model;
+import lombok.Builder;
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
+@Builder
 @Entity
 @Table(name = "employee")
 
@@ -22,6 +24,9 @@ public class Employee {
     private City city;
     @Column(name = "city_id")
     private int city;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "city_id")
+    private City city;
 
 
     public int getId() {
@@ -45,9 +50,11 @@ public class Employee {
     }
 
 
-        public int getCity() {
+    public int getCity() {
         return city;
     }
+    public City getCity() {
+        return (City) city;
 
     public void setId(int id) {
         this.id = id;
@@ -69,7 +76,8 @@ public class Employee {
         this.age = age;
     }
 
-    public void setCity(int city) {
+    public void setCity(City city) {
+        }
         this.city = city;
     }
 
@@ -90,7 +98,7 @@ public class Employee {
     public String toString() {
         return "id: " + getId() + "  Имя: " + getFirst_name() + "  Фамилия: "
                 + getLast_name() + "  Пол: " + getGender() + "  Возраст: " + getAge()
-                + "  Город проживания: " + getCity();
+                + "  Город проживания: " + city.toString();
     }
 
     @Override
