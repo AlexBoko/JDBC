@@ -21,13 +21,9 @@ public class Employee {
     private String gender;
     @Column(name = "age")
     private int age;
-    private City city;
-    @Column(name = "city_id")
-    private int city;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_id")
     private City city;
-
 
     public int getId() {
         return id;
@@ -49,12 +45,9 @@ public class Employee {
         return age;
     }
 
-
-    public int getCity() {
+    public City getCity() {
         return city;
     }
-    public City getCity() {
-        return (City) city;
 
     public void setId(int id) {
         this.id = id;
@@ -77,7 +70,6 @@ public class Employee {
     }
 
     public void setCity(City city) {
-        }
         this.city = city;
     }
 
@@ -93,7 +85,6 @@ public class Employee {
     public Employee() {
     }
 
-
     @Override
     public String toString() {
         return "id: " + getId() + "  Имя: " + getFirst_name() + "  Фамилия: "
@@ -106,7 +97,7 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id == employee.id && age == employee.age && city == employee.city && Objects.equals(first_name, employee.first_name) && Objects.equals(last_name, employee.last_name) && Objects.equals(gender, employee.gender);
+        return id == employee.id && age == employee.age && Objects.equals(first_name, employee.first_name) && Objects.equals(last_name, employee.last_name) && Objects.equals(gender, employee.gender) && Objects.equals(city, employee.city);
     }
 
     @Override
