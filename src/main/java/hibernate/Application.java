@@ -1,8 +1,7 @@
 package hibernate;
-
 import hibernate.model.City;
-import hibernate.model.Employee;
-import hibernate.service.CityDaoImpl;
+import model.Employee;
+import hibernate.service.cityDaoImpl;
 import hibernate.service.CityDao;
 import hibernate.service.EmployeeDAOImpl;
 import hibernate.service.EmployeeDAO;
@@ -10,20 +9,16 @@ import javax.transaction.Transactional;
 import java.sql.*;
 import java.util.List;
 @Transactional
-
 public class Application {
     public static void main(String[] args) throws SQLException {
         final String user = "postgres";
         final String password = "Wertyrwer";
         final String url = "jdbc:postgresql://localhost:5432/skypro";
-
         try (final Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement =
                      connection.prepareStatement("SELECT * FROM employee " +
                              "INNER JOIN city ON employee.city_id = city.city_id WHERE id = (2)")) {
-
             ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
                 String first_name = resultSet.getString("first_name");
                 String last_name = resultSet.getString("last_name");
@@ -41,19 +36,8 @@ public class Application {
             e.printStackTrace();
         }
         System.out.println("=========+++++++++=========");
-        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
-        employeeDAO.createEmployee(new Employee(1, "Петров", "Александр", "м", 35, new City(1, "")));
-        employeeDAO.updateEmployee(5, new Employee(5, "Сергей", "Смирнов", "м", 23, new City(2, "")));
-        employeeDAO.deleteEmployee(1);
-        employeeDAO.getAllEmployees();
-        System.out.println("=========+++++++++=========");
-        employeeDAO.getEmployeeById(4);
-        employeeDAO = new EmployeeDAOImpl();
-        employeeDAO.createEmployee(new Employee(1, "Александр", "Петров", "м", 35, 1));
-        employeeDAO.updateEmployee(new Employee(4, "Сергей", "Смирнов", "м", 23, 1), 4);
-        employeeDAO.deleteEmployee(new Employee(16, "Александр", "Петров", "м", 35, 2));
-        employeeDAO.getAllEmployees().forEach(System.out::println);
-        CityDao cityDao = new CityDaoImpl();
+
+        CityDao cityDao = new cityDaoImpl();
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 //        employeeDAO.createEmployee(new Employee(1, "Александр", "Петров", "м", 35, City.builder().city_name("Харьков").employees(List.of()).build()));
 //        employeeDAO.updateEmployee(new Employee(4, "Сергей", "Смирнов", "м", 23, new City(1, "Самара", List.of()) ), 4);
