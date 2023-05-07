@@ -1,14 +1,10 @@
 package hibernate.service;
-
 import hibernate.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import hibernate.model.Employee;
-
+import model.Employee;
 import java.util.List;
-
-public class EmployeeDAOImpl implements EmployeeDAO {
-
+public class EmployeeDAOImpl implements hibernate.service.EmployeeDAO {
     public Integer createEmployee(Employee employee) {
         Integer id;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
@@ -19,20 +15,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         System.out.println(employee);
         return id;
     }
-
     public Employee getEmployeeById(int idEmployee) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             System.out.println(session.get(Employee.class, idEmployee));
             return session.get(Employee.class, idEmployee);
         }
     }
-
     public List getAllEmployees() {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM Employee").list();
         }
     }
-
     public void updateEmployee(Employee employee, int id) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -42,7 +35,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             System.out.println(employee);
         }
     }
-
     public void deleteEmployee(Employee employee) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
